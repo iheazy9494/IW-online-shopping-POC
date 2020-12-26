@@ -1,0 +1,92 @@
+<div class="auth">
+  <span class="login100-form-logo">
+    <img src="assets/idealwaves.png" alt="idealwaves" class="img-fluid">
+  </span>
+  <h2 class="text-center">IW Online Shopping</h2>
+</div>
+<h4 id="title" class="title">Login</h4>
+<p class="sub-title">Hello! Log in with your email.</p>
+
+<div class="alert alert-danger" *ngIf="emailNotFound" [@enterAnimation] style="text-transform: capitalize;">
+  {{emailNotFound}}
+</div>
+<div class="alert alert-danger" *ngIf="emailNotVerified" [@enterAnimation] style="text-transform: capitalize;">
+  {{emailNotVerified}}
+</div>
+<div *ngIf="!error">
+  <form (ngSubmit)="login()" #form="ngForm" aria-labelledby="title">
+
+    <div class="form-control-group">
+      <label class="label" for="input-email">Email address:</label>
+      <input nbInput fullWidth [(ngModel)]="user.email" #email="ngModel" name="email" id="input-email"
+        pattern=".+@.+\..+" placeholder="Email address" autofocus
+        [status]="email.dirty ? (email.invalid  ? 'danger' : 'success') : ''"
+        [required]="getConfigValue('forms.validation.email.required')"
+        [attr.aria-invalid]="email.invalid && email.touched ? true : null">
+      <ng-container *ngIf="email.invalid && email.touched">
+        <div class="text-danger">
+          <div>
+            <small class="error-message" *ngIf="email.errors?.required">
+              Email is required!
+            </small>
+          </div>
+          <div>
+            <small class="error-message" *ngIf="email.errors?.pattern">
+              Email should be the real one!
+            </small>
+          </div>
+        </div>
+
+
+      </ng-container>
+    </div>
+
+    <div class="form-control-group">
+      <label class="label" for="input-password">Password:</label>
+      <input nbInput fullWidth [(ngModel)]="user.password" pattern="^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?!.*\s).*$"
+        #password="ngModel" name="password" type="password" id="input-password" placeholder="Password"
+        [status]="password.dirty ? (password.invalid  ? 'danger' : 'success') : ''"
+        [required]="getConfigValue('forms.validation.password.required')"
+        [minlength]="getConfigValue('forms.validation.password.minLength')"
+        [maxlength]="getConfigValue('forms.validation.password.maxLength')"
+        [attr.aria-invalid]="password.invalid && password.touched ? true : null">
+      <ng-container *ngIf="password.invalid && password.touched ">
+        <div class="text-danger">
+          <div>
+            <small class="error-message" *ngIf="password.errors?.required">
+              Password is required!
+            </small>
+          </div>
+          <div>
+            <small class="error-message" *ngIf="password.errors?.minlength || password.errors?.maxlength">
+              - Minimum {{ getConfigValue('forms.validation.password.minLength') }} to maximum
+              {{ getConfigValue('forms.validation.password.maxLength') }} characters
+
+            </small>
+          </div>
+          <div>
+            <small class="error-message" *ngIf="password.errors?.pattern">
+              - (UpperCase, LowerCase and Number)
+            </small>
+          </div>
+        </div>
+
+      </ng-container>
+    </div>
+
+
+    <button nbButton status="success" [disabled]=" loading || !form.valid" class="mx-auto d-block">
+      <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+      Log In
+    </button>
+  </form>
+</div>
+
+
+<div class="service-error text-center" *ngIf="error">
+  <h5>{{error}}</h5>
+</div>
+
+<section class="another-action" aria-label="Register">
+  Don't have an account? <a class="text-link" routerLink="../register">Register</a>
+</section>

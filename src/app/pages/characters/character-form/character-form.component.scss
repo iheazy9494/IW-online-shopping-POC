@@ -1,0 +1,12 @@
+.alert {
+    margin-top: 15px;
+    padding: 8px 15px;
+}
+
+select option[value="White"] {
+    background-color: green;
+
+    &:focus>option:checked {
+        background-color: green;
+    }
+}

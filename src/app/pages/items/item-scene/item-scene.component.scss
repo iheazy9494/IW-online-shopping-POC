@@ -1,0 +1,67 @@
+@import '../../../@theme/styles/styles';
+
+.image-area {
+    position: relative;
+    max-width: fit-content;
+}
+
+.image-area img {
+    max-width: 100%;
+    height: auto;
+}
+
+.remove-image {
+    cursor: pointer;
+    position: absolute;
+    top: -9px;
+    right: -10px;
+    border-radius: 50%;
+    width: 20px;
+    height: 20px;
+    line-height: 20px;
+    text-align: center;
+    font: 700 15px/15px sans-serif;
+    background: #555;
+    border: 3px solid #fff;
+    color: #FFF;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.5), inset 0 2px 4px rgba(0, 0, 0, 0.3);
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+    transition: background 0.5s;
+}
+
+.remove-image:hover {
+    background: #E54E4E;
+    color: #FFF;
+}
+
+.remove-image:active {
+    background: #E54E4E;
+    color: #FFF;
+}
+
+video {
+    width: 100%;
+    height: auto;
+}
+
+.img-fluid {
+    display: block;
+    margin: auto;
+}
+
+.uploadInput {
+    border: 1px dashed #bcc2d1;
+    padding: 7px;
+    border-radius: 4px;
+    width: 100%;
+    margin-top: 10px;
+    box-shadow: 0 0 5px #e4e6ee;
+}
+
+.sp-card {
+    box-shadow: 0 0 5px #d4daf3;
+    border-radius: 4px;
+    padding: 5px;
+    border: 1px solid #ddd;
+    margin-bottom: 15px;
+}

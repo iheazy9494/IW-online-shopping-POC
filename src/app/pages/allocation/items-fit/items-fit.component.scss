@@ -1,0 +1,63 @@
+.status {
+    width: 40px;
+    height: 10px;
+    display: inline-block;
+    border-radius: 2px;
+}
+
+b,
+strong {
+    font-weight: bolder;
+    font-size: 13px;
+}
+
+.media {
+    border-radius: 4px;
+    transition: all 0.3s ease-in-out;
+
+    img {
+        max-width: 24%;
+    }
+
+}
+
+.mianOverlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.21);
+    z-index: 11111111111111111;
+}
+
+.loadedChar {
+    position: fixed;
+    top: 27%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 40%;
+    background: #ffffff;
+    z-index: 1111;
+    padding: 15px;
+    border-radius: 5px;
+    box-shadow: 0 0 13px #00000047;
+    text-align: center;
+    text-transform: capitalize;
+
+    @media (max-width:767px) {
+        width: 85%;
+    }
+
+    span {
+        display: block;
+        text-align: center;
+        font-weight: 600;
+        font-size: 26px;
+        line-height: 1.4;
+
+        @media (max-width:767px) {
+            font-size: 20px;
+        }
+    }
+}

@@ -1,0 +1,49 @@
+<div class="auth">
+  <span class="login100-form-logo">
+    <img src="assets/idealwaves.png" alt="idealwaves" class="img-fluid">
+  </span>
+  <h2 class="text-center">IW Online Shopping</h2>
+</div>
+<h4 id="title" class="title">Verify Email</h4>
+<p class="sub-title">Please enter the verification code sent to your email address</p>
+<div class="alert " *ngIf="messageResponse" [ngClass]="messageResponse? 'alert-success': 'alert-danger' ">
+  {{messageResponse}} <a class="text-link" routerLink="../login"> Login</a>
+</div>
+<div *ngIf="!error">
+  <form (ngSubmit)="onVerifyEmail()" #form="ngForm" aria-labelledby="title">
+
+    <div class="form-control-group">
+      <label class="label" for="input-code">verification code:</label>
+      <input nbInput [(ngModel)]="code" #Vcode="ngModel" id="input-code" name="Vcode" pattern="[0-9]{5,9}"
+        placeholder="Code" fullWidth [status]="Vcode.dirty ? (Vcode.invalid  ? 'danger' : 'success') : ''" required
+        [attr.aria-invalid]="Vcode.invalid && Vcode.touched ? true : null">
+      <ng-container *ngIf="Vcode.invalid && Vcode.touched">
+        <div class="text-danger">
+          <div>
+            <small class="error-message" *ngIf="Vcode.errors?.required">
+              verification code is required!
+            </small>
+          </div>
+          <div>
+            <small class="error-message" *ngIf="Vcode.errors?.pattern">
+              nOT less than 5 Numbers.
+            </small>
+          </div>
+        </div>
+      </ng-container>
+    </div>
+
+    <button nbButton status="success" [disabled]=" !form.valid" class="mx-auto d-block">
+      Verify
+    </button>
+  </form>
+</div>
+
+<div class="service-error text-center" *ngIf="error">
+  <h3>{{error}}</h3>
+</div>
+
+<section class="another-action" aria-label="Sign in">
+  Didn't receive the code?
+  <a class="text-link" routerLink="../resendVerifyCode">Send code again</a>
+</section>

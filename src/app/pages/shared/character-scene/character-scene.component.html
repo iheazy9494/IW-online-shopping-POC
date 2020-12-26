@@ -1,0 +1,107 @@
+<div class="engine-wrapper" [ngClass]="{'full': fullscreen}">
+    <canvas #rendererCanvas id="renderCanvas"></canvas>
+    <ng-container *ngIf="fileDownloaded">
+        <div class="overlay"></div>
+        <div class="sk-circle">
+            <div class="sk-circle1 sk-child"></div>
+            <div class="sk-circle2 sk-child"></div>
+            <div class="sk-circle3 sk-child"></div>
+            <div class="sk-circle4 sk-child"></div>
+            <div class="sk-circle5 sk-child"></div>
+            <div class="sk-circle6 sk-child"></div>
+            <div class="sk-circle7 sk-child"></div>
+            <div class="sk-circle8 sk-child"></div>
+            <div class="sk-circle9 sk-child"></div>
+            <div class="sk-circle10 sk-child"></div>
+            <div class="sk-circle11 sk-child"></div>
+            <div class="sk-circle12 sk-child"></div>
+        </div>
+    </ng-container>
+    <div class="fullBtn" (click)="full()">
+        <img src="assets/fullscreen.png" alt="fullscreen" class="img-fluid">
+    </div>
+    <div class="toggleAnimation " nbTooltip="Toggle animation" nbTooltipStatus="primary" *ngIf="hideAnim">
+        <!-- <nb-toggle (checkedChange)="onAnim()"> </nb-toggle> -->
+        <button (click)="onAnim()">run</button>
+        <button (click)="onStop()">stop</button>
+
+    </div>
+</div>
+<div class="sceneBg" [ngClass]="{'sceneBgfull': fullscreen}">
+    <ul class="list-inline">
+        <li class="list-inline-item" *ngFor="let item of sceneBg; let i = index" [class.active]="selectedIndex === i">
+            <a class=" text-xs-center" routerLink="" (click)="changeSceneBg(item,i)">
+                <img [src]="item.thum" alt="idealwaves" class="img-fluid">
+            </a>
+        </li>
+
+    </ul>
+</div>
+<!-- <div class="col-12">
+    <div>
+        <div class="progress" style="height: 20px;margin-bottom:20px;">
+            <div class="progress-bar" role="progressbar" [style.width.%]="downPC" aria-valuenow="25" aria-valuemin="0"
+                aria-valuemax="100">{{downPC}}%</div>
+        </div>
+    </div>
+</div> -->
+<!-- <div>
+    <h6>hair styles</h6>
+    <button class="btn btn-primary mr-3" (click)="loadTypeStyle('Style1','hair')">hair style 1</button>
+    <button class="btn btn-primary mr-3" (click)="loadTypeStyle('Style2','hair')">hair style 2</button>
+</div>
+<div>
+    <h6>beard styles</h6>
+    <button class="btn btn-primary mr-3" (click)="loadTypeStyle('Style1','beard')">beard style 1</button>
+    <button class="btn btn-primary mr-3" (click)="loadTypeStyle('Style2','beard')">beard style 2</button>
+</div>
+<div>
+    <h6>mustache styles</h6>
+    <button class="btn btn-primary mr-3" (click)="loadTypeStyle('Style1','mustache')">mustache style 1</button>
+    <button class="btn btn-primary mr-3" (click)="loadTypeStyle('Style2','mustache')">mustache style 2</button>
+</div>
+<div>
+    <h6>body shape</h6>
+    <button class="btn btn-primary mr-3" (click)="runShapeKey('slim')">slim</button>
+    <button class="btn btn-primary mr-3" (click)="runShapeKey('normal')">normal</button>
+    <button class="btn btn-primary mr-3" (click)="runShapeKey('mscular')">mscular</button>
+    <button class="btn btn-primary mr-3" (click)="runShapeKey('fat')">fat</button>
+    <button class="btn btn-primary mr-3" (click)="runShapeKey('xfat')">xfat</button>
+</div>
+<div>
+    <h6>face shape</h6>
+    <button class="btn btn-primary mr-3" (click)="runShapeKey('square_faceShape','faceShape')">square_faceShape</button>
+    <button class="btn btn-primary mr-3"
+        (click)="runShapeKey('diamond_faceShape','faceShape')">diamond_faceShape</button>
+    <button class="btn btn-primary mr-3" (click)="runShapeKey('heart_faceShape','faceShape')">heart_faceShape</button>
+    <button class="btn btn-primary mr-3" (click)="runShapeKey('oblong_faceShape','faceShape')">oblong_faceShape</button>
+    <button class="btn btn-primary mr-3" (click)="runShapeKey('oval_faceShape','faceShape')">oval_faceShape</button>
+    <button class="btn btn-primary mr-3" (click)="runShapeKey('round_faceShape','faceShape')">round_faceShape</button>
+    <button class="btn btn-primary mr-3"
+        (click)="runShapeKey('triangle_faceShape','faceShape')">triangle_faceShape</button>
+    <button class="btn btn-primary mr-3"
+        (click)="runShapeKey('inverted_faceShape','faceShape')">inverted_faceShape</button>
+</div>
+<div>
+    <h6>nose shape</h6>
+    <button class="btn btn-primary mr-3" (click)="runShapeKey('nubian_noseShape','noseShape')">nubian_noseShape</button>
+    <button class="btn btn-primary mr-3"
+        (click)="runShapeKey('straight_noseShape','noseShape')">straight_noseShape</button>
+    <button class="btn btn-primary mr-3" (click)="runShapeKey('hook_noseShape','noseShape')">hook_noseShape</button>
+    <button class="btn btn-primary mr-3" (click)="runShapeKey('greek_noseShape','noseShape')">greek_noseShape</button>
+    <button class="btn btn-primary mr-3" (click)="runShapeKey('button_noseShape','noseShape')">button_noseShape</button>
+    <button class="btn btn-primary mr-3" (click)="runShapeKey('arched_noseShape','noseShape')">arched_noseShape</button>
+    <button class="btn btn-primary mr-3"
+        (click)="runShapeKey('concave_noseShape','noseShape')">concave_noseShape</button>
+</div>
+<div>
+    <h6>age shape</h6>
+    <button class="btn btn-primary mr-3"
+        (click)="runShapeKey('age_youngAdult_18-25','age')">age_youngAdult_18-25</button>
+    <button class="btn btn-primary mr-3"
+        (click)="runShapeKey('age_youngAdult_25-35','age')">age_youngAdult_25-35</button>
+    <button class="btn btn-primary mr-3" (click)="runShapeKey('age_adultHood_35-45','age')">age_adultHood_35-45</button>
+    <button class="btn btn-primary mr-3" (click)="runShapeKey('age_adultHood_45-55','age')">age_adultHood_45-55</button>
+    <button class="btn btn-primary mr-3" (click)="runShapeKey('age_maturity_55-65','age')">age_maturity_55-65</button>
+    <button class="btn btn-primary mr-3" (click)="runShapeKey('age_maturity_65+','age')">age_maturity_65+</button>
+</div> -->

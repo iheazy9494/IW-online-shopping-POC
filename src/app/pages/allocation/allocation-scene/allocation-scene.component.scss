@@ -1,0 +1,16 @@
+.engine-wrapper {
+    position: relative;
+
+    #renderCanvas {
+        width: 100% !important;
+        height: 450px !important;
+    }
+}
+
+#renderCanvas:focus {
+    outline: none;
+}
+
+span{
+    font-weight: 600;
+}

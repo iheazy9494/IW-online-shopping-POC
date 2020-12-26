@@ -1,0 +1,37 @@
+export class Items {
+
+    constructor(
+        public sn: string,
+        public name: string,
+        public genderType: string,
+        public genderFit: string,
+        public type: string,
+        public subtype1: string,
+        public cutStyle: string,
+        public color: string,
+        public brand: string,
+        public sizeUnit: string,
+        public size: string,
+        public shoulderToFeet: number,
+        public shoulderToUnderKnee: number,
+        public shoulderToAboveKnee: number,
+        public shoulderToHeel: number,
+        public shoulderToHip: number,
+        public chest: number,
+        public waist: number,
+        public neck: number,
+        public leg: number,
+        public sleeve: number,
+        public hip: number,
+        public shoseSize: number,
+        public bagSize: string,
+        public itemBodyForm: string,
+        public id?: number,
+        public subtype2?: string,
+        public threeD?: [],
+        public twoD?: [],
+        public video?: [],
+        public surrounding?: [],
+    
+    ) { }
+}

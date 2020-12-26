@@ -1,0 +1,52 @@
+<nb-card>
+    <nb-card-header>
+        <h4>Items Allocation</h4>
+    </nb-card-header>
+    <nb-card-body>
+        <div class="row">
+            <div class="col-md-7  col-12">
+                <button class="btn btn-info mb-1" (click)="openModal(characterInfo)">character Info</button>
+
+                <ngx-character-scene></ngx-character-scene>
+
+            </div>
+            <div class="col-md-5  col-12">
+                <ngx-items-fit></ngx-items-fit>
+            </div>
+        </div>
+    </nb-card-body>
+</nb-card>
+
+<ng-template #characterInfo>
+    <div class="modal-header">
+        <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <div class="row">
+            <div class="col-md-6 col-12">
+                <P><span>Name:</span> {{character.characterName}}</P>
+            </div>
+            <div class="col-md-6 col-12">
+                <P><span>Gender:</span> {{character.gendar}}</P>
+            </div>
+            <div class="col-md-6 col-12">
+                <P><span>Age:</span> {{character.age}}</P>
+            </div>
+            <div class="col-md-6 col-12">
+                <P><span>Body Form:</span> {{character.bodyForm}}</P>
+            </div>
+            <div class="col-md-6 col-12">
+                <P><span>Chest:</span> {{character.chest}}</P>
+            </div>
+            <div class="col-md-6 col-12">
+                <P><span>waist:</span> {{character.waist}}</P>
+            </div>
+
+            <div class="col-12">
+                <P><span>Url:</span> {{character['url']}}</P>
+            </div>
+        </div>
+    </div>
+</ng-template>

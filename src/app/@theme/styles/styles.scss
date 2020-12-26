@@ -1,0 +1,330 @@
+@import url('https://fonts.googleapis.com/css?family=Open+Sans:400,600,700&display=swap');
+
+// themes - our custom or/and out of the box themes
+@import 'themes';
+
+// framework component themes (styles tied to theme variables)
+@import '~@nebular/theme/styles/globals';
+@import '~@nebular/auth/styles/all';
+
+@import '~bootstrap/scss/functions';
+@import '~bootstrap/scss/variables';
+@import '~bootstrap/scss/mixins';
+@import '~bootstrap/scss/grid';
+
+// loading progress bar theme
+@import './pace.theme';
+
+@import './layout';
+@import './overrides';
+
+// install the framework and custom global styles
+@include nb-install() {
+
+  // framework global styles
+  @include nb-theme-global();
+  @include nb-auth-global();
+
+  @include ngx-layout();
+  // loading progress bar
+  @include ngx-pace-theme();
+
+  @include nb-overrides();
+}
+
+;
+
+@import "~@ng-select/ng-select/themes/default.theme.css";
+
+/************************ data grid /************************/
+.dx-datagrid-rowsview .dx-row {
+  transition: background-color 0.3s ease-in-out;
+
+  &:hover {
+    background-color: #eee;
+    cursor: pointer;
+  }
+}
+
+.dx-datagrid .dx-link,
+.dx-datagrid .dx-header-filter-empty {
+  color: rgb(133, 141, 148);
+}
+
+.dx-datagrid-headers {
+  color: #192038;
+}
+
+.dx-widget {
+  font-size: .9375rem;
+  font-family: Open Sans, sans-serif;
+  max-width: 100% !important;
+}
+
+.dx-datagrid .dx-datagrid-content .dx-datagrid-table .dx-row .dx-command-edit-with-icons .dx-link {
+  font-size: 24px;
+  margin: 0 10px;
+}
+
+.dx-datagrid-content .dx-datagrid-table .dx-row>td,
+.dx-datagrid-content .dx-datagrid-table .dx-row>tr>td {
+  vertical-align: middle;
+}
+
+.dx-datagrid .dx-row>td {
+  padding: 15px 7px;
+}
+
+.dx-scrollbar-hoverable {
+  height: 10px !important;
+}
+
+.label {
+  color: #192038 !important;
+}
+
+[nbButton].size-medium {
+  font-size: 0.775rem !important;
+}
+
+
+ng2-st-tbody-custom {
+  display: flex !important;
+}
+
+ng2-smart-table .ng2-smart-actions {
+  padding: 0.875rem 1.25rem !important;
+  display: flex !important;
+  height: 100% !important;
+  width: 100% !important;
+  justify-content: center !important;
+}
+
+ng2-smart-table table tr th a {
+  white-space: nowrap !important;
+}
+
+
+.ng-select .ng-clear-wrapper {
+  display: none !important;
+}
+
+.ng-select.ng-select-single .ng-select-container {
+  background-color: #f7f9fc !important;
+  border-color: #edf1f7 !important;
+}
+
+nb-card-body {
+  overflow: unset !important;
+}
+
+.ng-star-inserted {
+  cursor: pointer !important;
+}
+
+ng2-smart-table table tr td {
+  white-space: nowrap;
+}
+
+.form-control-group {
+  margin-bottom: 1.2rem !important;
+}
+
+.phoneNum {
+
+  .dropbtn {
+    background-color: #f7f9fc !important;
+  }
+
+  .form-control {
+    background-color: #f7f9fc !important;
+    border-color: #edf1f7 !important;
+  }
+}
+
+
+
+.header-container .logo {
+  @media (max-width: 767.98px) {
+    padding: 0 !important;
+  }
+}
+
+.service-error {
+  text-transform: capitalize;
+}
+
+// nb-card {
+//   height: auto !important;
+// }
+.modelCustom{
+  @media (min-width: 576px) {
+    .modal-dialog {
+      padding: 50px 0;
+      margin: auto;
+    }
+  }
+  
+  @media (max-width: 575px) {
+    .modal-dialog {
+      margin: 1.5rem;
+    }
+  }
+  
+  .modal-body,
+  .modal-header,
+  .modal-header .close {
+    padding: 0;
+  }
+  
+  .close {
+    color: #fff;
+    opacity: 0.8;
+  }
+  
+  .modal-content {
+    background-color: unset;
+    border: none;
+    border-radius: 0
+  }
+}
+
+
+.nb-theme-default nb-actions.size-small nb-action {
+  padding: 0;
+  padding-left: 7px;
+}
+
+h5 {
+  word-break: break-word;
+}
+
+.nb-theme-default nb-layout .layout .layout-container .content .columns nb-layout-column {
+  padding: 15px !important;
+}
+
+
+.logo {
+  white-space: unset !important;
+  display: flex;
+  align-items: center;
+
+  @media (max-width:400px) {
+    flex-direction: column;
+  }
+
+  .login100-form-logo {
+    width: 100px;
+    margin: 0 auto;
+
+    @media (max-width:400px) {
+      width: 80px;
+    }
+  }
+
+  span {
+    white-space: nowrap;
+    margin-left: 5px;
+
+    @media (max-width:400px) {
+      font-size: 16px;
+    }
+  }
+}
+
+
+
+.auth {
+  .login100-form-logo {
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 225px;
+    margin: auto;
+  }
+
+  h2 {
+    margin: 0;
+    margin-bottom: 15px;
+  }
+
+
+
+  @media (max-width: 767.9px) {
+    h2 {
+      font-size: 23px !important;
+    }
+  }
+
+
+
+  /* Medium devices (tablets, 768px and up) */
+  @media (min-width: 768px) {
+    h2 {
+      font-size: 28px !important;
+    }
+  }
+
+  /* Large devices (desktops, 992px and up) */
+  @media (min-width: 992px) {
+    h2 {
+      font-size: 35px !important;
+    }
+  }
+}
+
+.custom-buttons-row {
+  position: absolute;
+  top: 15px;
+  z-index: 1;
+
+  @media (max-width:804px) {
+    position: unset;
+    margin-bottom: 5px;
+  }
+}
+
+
+
+//3d scene
+.toggleAnimation {
+  .toggle-label {
+    display: flex !important;
+    align-items: center !important;
+    flex-direction: column !important;
+    margin-bottom: 0 !important;
+  }
+
+  .toggle-switcher {
+    width: 1rem !important;
+    height: 1rem !important;
+  }
+
+  .toggle {
+    height: 1.1rem !important;
+    width: 2.125rem !important;
+    background-color: rgba(161, 162, 163, 1) !important;
+    border: 1px solid #6a6f78 !important;
+
+    &:hover {
+      background-color: rgba(51, 102, 255, 0.16) !important;
+      border-color: #3366ff !important;
+    }
+
+
+  }
+
+  .toggle.checked {
+    background-color: #598bff !important;
+    border-color: #598bff !important;
+  }
+
+  .text {
+    font-size: 12px !important;
+    font-weight: 600 !important;
+  }
+}

@@ -1,0 +1,289 @@
+<div *ngIf="!error">
+  <div class="alert alert-success text-center mt-2" role="alert" *ngIf="compyMode">Copied Success!</div>
+  <form (ngSubmit)="onSubmit(f)" #f=ngForm>
+    <div class="row">
+      <div class="col-sm-4 col-xs-12" *ngIf="editMode">
+        <div class="form-group">
+          <label for="id" class="label">ID</label>
+          <input type="text" nbInput fullWidth placeholder="" [value]="ItemId" name="id" required disabled>
+        </div>
+      </div>
+      <div class="col-sm-4 col-xs-12">
+        <div class="form-group">
+          <label for="id" class="label">SN#</label>
+          <input type="text" nbInput fullWidth placeholder="SN#" ngModel name="sn" required>
+        </div>
+      </div>
+      <div class="col-sm-4 col-xs-12">
+        <div class="form-group">
+          <label for="name" class="label">Item Name<span class="text-danger">*</span></label>
+          <input type="text" nbInput fullWidth placeholder="Name" ngModel name="name" #itemName="ngModel"
+            pattern="[a-zA-Z0-9]|[a-zA-Z0-9]+[a-zA-Z0-9\s]$" minlength="5" maxlength="30" required>
+          <div *ngIf="!itemName?.valid && (itemName?.dirty || itemName?.touched)" class="text-danger">
+            <div *ngIf="itemName.errors.required || itemName.errors.minlength ">
+              <div><small>Not less than 5 char</small></div>
+            </div>
+            <div *ngIf="itemName.errors.pattern">
+              <small> Not starting with space</small>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-4 col-xs-12">
+        <div class="form-group">
+          <label for="gender" class="label">Item Gender Type<span class="text-danger">*</span></label>
+          <ng-select [items]="[{name:'Male'},{name:'Female'}]" bindLabel="name" bindValue="name" placeholder="Choose..."
+            [ngModel]="null" name="genderType" (change)="onGenderChange($event)" required>
+          </ng-select>
+        </div>
+      </div>
+
+      <div class="col-sm-4 col-xs-12">
+        <div class="form-group">
+          <label for="genderFit" class="label">Item Gender Fit<span class="text-danger">*</span></label>
+          <ng-select [items]="GenderFit" bindLabel="name" bindValue="name" placeholder="Choose..."
+            [(ngModel)]="selectedGenderFit" #GenderFitControler="ngModel" name="genderFit" required
+            (change)='onGenderFit($event)'>
+          </ng-select>
+          <span *ngIf="!GenderFitControler?.valid && (GenderFitControler?.dirty || GenderFitControler?.touched)"
+            class="text-danger">
+            <small *ngIf="!editMode && !GenderFit"> Select Gender Type First!</small></span>
+        </div>
+      </div>
+      <div class="col-md-4 col-sm-6 col-12">
+        <div class="form-group">
+          <label class="label">Item Character Form<span class="text-danger">*</span></label>
+          <ng-select [items]="itemCharacterFormArr" bindLabel="name" bindValue="name" placeholder="Choose..."
+            [ngModel]="null" #bodyForm="ngModel" name="itemBodyForm" required>
+          </ng-select>
+        </div>
+      </div>
+      <div class="col-sm-4 col-xs-12">
+        <div class="form-group">
+          <label for="category" class="label">Item Type<span class="text-danger">*</span></label>
+          <ng-select [items]="[{name:'Clothes'},{name:'Accessories'}]" bindLabel="name" bindValue="name"
+            placeholder="Choose..." (change)="onItemTypeChange($event)" [(ngModel)]="selectedItemType" name="type"
+            required>
+          </ng-select>
+        </div>
+      </div>
+      <div class="col-sm-4 col-xs-12">
+        <div class="form-group">
+          <label for="subtype" class="label">Item SubType<span class="text-danger">*</span></label>
+          <ng-select [items]="selectedItemSubTypes" bindLabel="name" bindValue="name" placeholder="Choose..."
+            [(ngModel)]="selectedItemSubType" (change)="onItemsubType($event)" #itemSubTypeControler="ngModel"
+            name="subtype1" required>
+          </ng-select>
+          <span *ngIf="!itemSubTypeControler?.valid && (itemSubTypeControler?.dirty || itemSubTypeControler?.touched)"
+            class="text-danger">
+            <small *ngIf="!editMode && !selectedItemSubTypes">Select Gender Fit and Item Type First</small>
+          </span>
+        </div>
+      </div>
+      <ng-container *ngIf="bagsMode || shoesMode">
+        <div class="col-sm-4 col-xs-12" *ngIf="exeptAccess">
+          <div class="form-group">
+            <label for="cut" class="label">Item Cut Style<span class="text-danger">*</span></label>
+            <ng-select
+              [items]="[{name:'Normal'},{name:'Extra'},{name:'Regular Fit'},{name:'Slim Fit'},{name:'Skinny Fit'}]"
+              bindLabel="name" bindValue="name" placeholder="Choose..." [ngModel]="null" name="cutStyle" required>
+            </ng-select>
+          </div>
+        </div>
+      </ng-container>
+
+      <div class="col-sm-4 col-xs-12">
+        <div class="form-group">
+          <label for="color" class="label">Item Color<span class="text-danger">*</span></label>
+          <ng-select [items]="[{name:'Navy'},
+                            {name:'Black'},
+                            {name:'White'},
+                            {name:'Blue'},
+                            {name:'Green'},
+                            {name:'Red'},
+                            {name:'Maroon'},
+                            {name:'Dark Red'},
+                            {name:'Grey'},
+                            {name:'Yellow'},
+                            {name:'Orange'},
+                            {name:'Rose'},
+                            {name:'Brown'}]" bindLabel="name" bindValue="name" placeholder="Choose..." [ngModel]="null"
+            name="color" required>
+          </ng-select>
+        </div>
+      </div>
+      <div class="col-sm-4 col-xs-12">
+        <div class="form-group">
+          <label for="color" class="label">Item Brand<span class="text-danger">*</span></label>
+          <ng-select [items]="[{name:'Local Brand'},{name:'International Brand'}]" bindLabel="name" bindValue="name"
+            placeholder="Choose..." [ngModel]="null" name="brand" required>
+          </ng-select>
+        </div>
+      </div>
+      <div class="col-sm-4 col-xs-12" *ngIf="shoesMode">
+        <div class="form-group">
+          <label for="color" class="label">Item Size Unit<span class="text-danger">*</span></label>
+          <ng-select [items]="[{name:'US Standard'}]" bindLabel="name" bindValue="name" placeholder="Choose..."
+            [ngModel]="null" name="sizeUnit" (change)='onSizeUnit($event)' required>
+          </ng-select>
+          <!-- EU Standard, Numbers-->
+        </div>
+      </div>
+      <ng-container *ngIf="itemSubTypeMode">
+        <div class="col-sm-4 col-xs-12" *ngIf="shoesMode">
+          <div class="form-group">
+            <label for="size" class="label">Shoes Size<span class="text-danger">*</span></label>
+            <ng-select [items]="shoseSize" bindLabel="name" bindValue="name" placeholder="Choose..." [ngModel]="null"
+              name="shoseSize" required>
+            </ng-select>
+          </div>
+        </div>
+        <div class="col-sm-4 col-xs-12" *ngIf="bagsMode">
+          <div class="form-group">
+            <label for="size" class="label">Bags Size<span class="text-danger">*</span></label>
+            <ng-select [items]="[{name:'Small'},{name:'Big'}]" bindLabel="name" bindValue="name" placeholder="Choose..."
+              [ngModel]="null" name="bagSize" required>
+            </ng-select>
+          </div>
+        </div>
+      </ng-container>
+
+      <ng-container *ngIf="exeptAccess">
+        <div class="col-sm-4 col-xs-12">
+          <div class="form-group">
+            <label for="size" class="label">Item Size<span class="text-danger">*</span></label>
+            <ng-select [items]="selectedSize" bindLabel="name" bindValue="name" placeholder="Choose..." [ngModel]="null"
+              name="size" required>
+            </ng-select>
+          </div>
+        </div>
+        <div class="col-sm-4 col-xs-12" *ngIf="itemSubTypeMode">
+          <div class="form-group">
+            <label for="height" class="label">Shoulder to Feet Length<span class="text-danger">*</span></label>
+            <ng-select [items]="shoulderToFeet" bindLabel="name" bindValue="name" placeholder="Choose..."
+              [ngModel]="null" name="shoulderToFeet" required>
+            </ng-select>
+          </div>
+        </div>
+        <div class="col-md-4 col-sm-6 col-12" *ngIf="itemSubTypeMode">
+          <div class="form-group">
+            <label for="shoulderToUnderKnee" class="label">Shoulder to Under Knee Length<span
+                class="text-danger">*</span></label>
+            <ng-select [items]="shoulderToUnderKnee" bindLabel="name" bindValue="name" placeholder="Choose..."
+              [ngModel]="null" name="shoulderToUnderKnee" required>
+            </ng-select>
+          </div>
+        </div>
+        <div class="col-md-4 col-sm-6 col-12" *ngIf="itemSubTypeMode">
+          <div class="form-group">
+            <label for="shoulderToAboveKnee" class="label">Shoulder to Above Knee Length<span
+                class="text-danger">*</span></label>
+            <ng-select [items]="shoulderToAboveKnee" bindLabel="name" bindValue="name" placeholder="Choose..."
+              [ngModel]="null" name="shoulderToAboveKnee" required>
+            </ng-select>
+          </div>
+        </div>
+        <div class="col-sm-4 col-xs-12" *ngIf="itemSubTypeMode">
+          <div class="form-group">
+            <label for="height" class="label">Shoulder to Heel Length<span class="text-danger">*</span></label>
+            <ng-select [items]="shoulderToHeel" bindLabel="name" bindValue="name" placeholder="Choose..."
+              [ngModel]="null" name="shoulderToHeel" required>
+            </ng-select>
+          </div>
+        </div>
+        <ng-container *ngIf="trouserMode">
+          <div class="col-sm-4 col-xs-12" *ngIf="DressMode">
+            <div class="form-group">
+              <label for="height1" class="label">Shoulder to Hip Length<span class="text-danger">*</span></label>
+              <ng-select [items]="shoulderToHip" bindLabel="name" bindValue="name" placeholder="Choose..."
+                [ngModel]="null" name="shoulderToHip" required>
+              </ng-select>
+            </div>
+          </div>
+        </ng-container>
+
+        <div class="col-sm-4 col-xs-12" *ngIf="trouserMode">
+          <div class="form-group">
+            <label for="chest" class="label">Chest Width<span class="text-danger">*</span></label>
+            <ng-select [items]="chest" bindLabel="name" bindValue="name" placeholder="Choose..." [ngModel]="null"
+              name="chest" required>
+            </ng-select>
+          </div>
+        </div>
+        <div class="col-sm-4 col-xs-12">
+          <div class="form-group">
+            <label for="waist" class="label">Waist Width<span class="text-danger">*</span></label>
+            <ng-select [items]="waist" bindLabel="name" bindValue="name" placeholder="Choose..." [ngModel]="null"
+              name="waist" required>
+            </ng-select>
+          </div>
+        </div>
+        <ng-container *ngIf="tshirtMode || jacketMode">
+          <ng-container *ngIf="trouserMode">
+            <div class="col-sm-4 col-xs-12">
+              <div class="form-group">
+                <label for="hip" class="label">Hip Width<span class="text-danger">*</span></label>
+                <ng-select [items]="hip" bindLabel="name" bindValue="name" placeholder="Choose..." [ngModel]="null"
+                  name="hip" required>
+                </ng-select>
+              </div>
+            </div>
+          </ng-container>
+        </ng-container>
+        <ng-container *ngIf="DressMode">
+          <ng-container *ngIf="trouserMode">
+            <div class="col-sm-4 col-xs-12">
+              <div class="form-group">
+                <label for="neck" class="label">Neck Width<span class="text-danger">*</span></label>
+                <ng-select [items]="neck" bindLabel="name" bindValue="name" placeholder="Choose..." [ngModel]="null"
+                  name="neck" required>
+                </ng-select>
+              </div>
+            </div>
+          </ng-container>
+
+        </ng-container>
+        <ng-container *ngIf="tshirtMode || jacketMode">
+          <ng-container *ngIf="DressMode">
+            <div class="col-sm-4 col-xs-12">
+              <div class="form-group">
+                <label for="legLength" class="label">Leg Length<span class="text-danger">*</span></label>
+                <ng-select [items]="leg" bindLabel="name" bindValue="name" placeholder="Choose..." [ngModel]="null"
+                  name="leg" required>
+                </ng-select>
+              </div>
+            </div>
+          </ng-container>
+        </ng-container>
+        <ng-container *ngIf="DressMode">
+          <ng-container *ngIf="trouserMode">
+            <div class="col-sm-4 col-xs-12">
+              <div class="form-group">
+                <label for="sleeveLength" class="label">Sleeve Length<span class="text-danger">*</span></label>
+                <ng-select [items]="sleeve" bindLabel="name" bindValue="name" placeholder="Choose..." [ngModel]="null"
+                  name="sleeve" required>
+                </ng-select>
+              </div>
+            </div>
+
+          </ng-container>
+
+        </ng-container>
+      </ng-container>
+
+    </div>
+    <div class="row">
+      <div class="col-md-3 col-12">
+        <button type="submit" class="mb-2" nbButton [disabled]="f.invalid">{{editMode ? 'Update' : 'Create'}}</button>
+      </div>
+      <div *ngIf="editMode" class="col-md-3 col-12">
+        <button type="button" class="mb-2" nbButton (click)="onCopyItem()" [disabled]="f.invalid">Copy from
+          Existing</button>
+      </div>
+    </div>
+    <div class="alert alert-success text-center mt-2" role="alert" *ngIf="updateSuccess">update Success!</div>
+  </form>
+</div>
+<div class="service-error text-center" *ngIf="error">
+  <h5>{{error}}</h5>
+</div>

@@ -1,0 +1,176 @@
+<div class="sp-card">
+    <nb-card-header>Item 2D Images
+    </nb-card-header>
+    <div class="row">
+        <div class="col-12">
+            <div class="form-group">
+                <input class="uploadInput" type='file' #twodInput name="twodimage" (change)="onSelectFiletwo2($event)"
+                    multiple accept="image/*">
+            </div>
+            <button nbButton [disabled]="!ItemId" class="float-right mb-2" (click)="onUpload2D()">Upload 2D</button>
+        </div>
+        <div class="col-12">
+            <div *ngIf="fileUpload1.status==='progress'">
+                <div class="progress" style="height: 20px;margin-bottom:20px;">
+                    <div class="progress-bar" role="progressbar" [style.width.%]="fileUpload1.message"
+                        aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">{{fileUpload1.message}}%</div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 col-sm-6 mb-2" *ngFor="let item of towDPreviewArr; let i = index">
+            <div class="image-area">
+                <img (click)="openModal(towdUpload,item)" class=" img-fluid"
+                    [src]="apiUrl+':8100/file-transfer-service/items/'+ ItemId +'/'+item" alt="">
+                <div class="remove-image" href="#" (click)="onDelete2D(item,i)" style="display: inline;">&#215;
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+<div class="sp-card">
+    <nb-card-header>Item Video
+
+    </nb-card-header>
+    <nb-card-body>
+        <div class="row">
+            <div class="col-12">
+                <div class="form-group">
+                    <input class="uploadInput" type='file' #videoInput name="videoFile"
+                        (change)="onSelectFileVideo($event)" accept="video/*">
+                    <!-- <p-fileUpload name="myfile[]" url="./upload.php" (onUpload)="onUpload($event)" multiple="multiple"
+                        accept="image/*" maxFileSize="10000000" [previewWidth]="innerWidth <= 766 ?'150':'200'"
+                        styleClass="w-100">
+                    </p-fileUpload> -->
+                </div>
+                <button nbButton [disabled]="!ItemId" class="float-right mb-2" (click)="onUploadVideo()">Upload
+                    video</button>
+            </div>
+
+        </div>
+        <div class="row">
+            <div class="col-12">
+                <div *ngIf="fileUpload2.status==='progress'">
+                    <div class="progress" style="height: 20px;margin-bottom:20px;">
+                        <div class="progress-bar" role="progressbar" [style.width.%]="fileUpload2.message"
+                            aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">{{fileUpload2.message}}%</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div *ngFor="let item of videoPreviewArr; let i = index">
+            <div class="image-area">
+                <video [src]="apiUrl+':8100/file-transfer-service/items/'+ ItemId +'/'+item" type="video/mp4"
+                    controls></video>
+                <div class="remove-image" href="#" (click)="onDeleteVideo(item,i)" style="display: inline;">
+                    &#215;</div>
+            </div>
+        </div>
+        <!-- <div plyr style="width: 100%;" plyrTitle="Video 1" [plyrPlaysInline]="true" [plyrSources]="videoSources"
+            (plyrInit)="player = $event" (plyrPlay)="played($event)"></div> -->
+    </nb-card-body>
+</div>
+<div class="sp-card">
+    <nb-card-header>Item 360 Image
+
+    </nb-card-header>
+    <nb-card-body>
+        <div class="row">
+            <div class="col-12">
+                <div class="form-group">
+                    <input class="uploadInput" type='file' #threeSixtyInput name="360File"
+                        (change)="onSelectFile360($event)" multiple accept=".jpg">
+                </div>
+                <button nbButton [disabled]="!ItemId || !disable360" class="float-right mb-2"
+                    (click)="onUpload360()">Upload
+                    360</button>
+            </div>
+        </div>
+
+        <div class="row" *ngIf="disable360">
+            <div class="col-12">
+                <p class="mt-2" style="text-transform: capitalize;">It will render after any upload completed</p>
+            </div>
+        </div>
+        <div class="row" *ngIf="ItemId">
+            <div class="col-12">
+                <div *ngIf="fileUpload3.status==='progress'">
+                    <div class="progress" style="height: 20px;margin-bottom:20px;">
+                        <div class="progress-bar" role="progressbar" [style.width.%]="fileUpload3.message"
+                            aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">{{fileUpload3.message}}%</div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <div>
+            <div class="image-area" *ngIf="show360" style="max-width: 100%;">
+                <ng-container *ngIf="threeSixtyPreviewArr.length > 0">
+                    <div class="cloudimage-360"
+                        [attr.data-folder]="threeSixtyPreviewArr.length > 0 ? apiUrl+':8100/file-transfer-service/items/'+ ItemId +'/360/' :null "
+                        data-filename="{index}.jpg"
+                        [attr.data-amount]="threeSixtyPreviewArr.length > 0 ?threeSixtyPreviewArr.length : 0 "
+                        data-magnifier="3">
+                    </div>
+                </ng-container>
+
+                <div *ngIf="threeSixtyPreviewArr.length>0" class="remove-image" href="#" (click)="onDelete360()"
+                    style="display: inline;">
+                    &#215;</div>
+            </div>
+        </div>
+    </nb-card-body>
+</div>
+<div class="sp-card">
+    <nb-card-header>Item 3D
+
+
+    </nb-card-header>
+    <nb-card-body>
+        <div class="row">
+            <div class="col-12">
+                <div class="form-group">
+                    <input class="uploadInput" type='file' #threeDInput name="3dFile" (change)="onSelectFile3D($event)"
+                        accept=".glb">
+                </div>
+                <button nbButton [disabled]="!ItemId" class="float-right mb-2" (click)="onUpload3D()">Upload 3D
+                </button>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12">
+                <div *ngIf="fileUpload4.status==='progress'">
+                    <div class="progress" style="height: 20px;margin-bottom:20px;">
+                        <div class="progress-bar" role="progressbar" [style.width.%]="fileUpload4.message"
+                            aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">{{fileUpload4.message}}%</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <ul class="list-group">
+            <li class="list-group-item" *ngFor="let item of threeDPreview; let i = index">
+                <div class="image-area" style="max-width: 100%;">
+                    {{item}}
+                    <div class="remove-image" href="#" (click)="onDelete3D(item,i)" style="display: inline;">
+                        &#215;</div>
+                </div>
+            </li>
+        </ul>
+        <div class="mt-2">
+            <ngx-character-scene></ngx-character-scene>
+        </div>
+    </nb-card-body>
+</div>
+
+<ng-template #towdUpload>
+    <div class="modelCustom">
+        <div class="modal-header">
+            <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="modal-body">
+            <img class="img-fluid" [src]="apiUrl+':8100/file-transfer-service/items/'+ ItemId +'/'+towDValue" alt="">
+        </div>
+    </div>
+</ng-template>

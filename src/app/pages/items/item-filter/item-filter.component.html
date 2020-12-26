@@ -1,0 +1,131 @@
+<nb-card>
+  <nb-card-header>
+    <h4>Items</h4>
+  </nb-card-header>
+  <nb-card-body>
+    <div *ngIf="!error">
+      <!-- <div class="row">
+        <div class="col-md-3 col-sm-6 col-12">
+          <div class="form-group">
+            <label for="id" class="label">Search by Id </label>
+            <input type="text" nbInput fullWidth placeholder="Id" (keyup)="getFilterValue($event,'id')" />
+          </div>
+        </div>
+        <div class="col-md-3 col-sm-6 col-12">
+          <div class="form-group">
+            <label for="name" class="label">Search by Name</label>
+            <input type="text" nbInput fullWidth placeholder="Name" (keyup)="getFilterValue($event,'name')" />
+          </div>
+        </div>
+        <div class="col-md-3 col-sm-6 col-12">
+          <div class="form-group">
+            <label for="category" class="label">Search by Category</label>
+            <input type="text" nbInput fullWidth placeholder="Name" (keyup)="getFilterValue($event,'category')" />
+          </div>
+        </div>
+        <div class="col-md-3 col-sm-6 col-12">
+          <div class="form-group">
+            <label for="date" class="label">Search by Date</label>
+            <input type="text" nbInput fullWidth placeholder="Creation Date" (keyup)="getFilterValue($event,'date')" />
+          </div>
+        </div>
+        <div class="col-md-3 col-sm-6 col-12">
+          <div class="form-group">
+            <label for="type" class="label">Search by type</label>
+            <input type="text" nbInput fullWidth placeholder="Type" (keyup)="getFilterValue($event,'type')" />
+          </div>
+        </div>
+        <div class="col-md-3 col-sm-6 col-12">
+          <div class="form-group">
+            <label for="subtype" class="label">Search by Sub-Type</label>
+            <input type="text" nbInput fullWidth placeholder="Sub-Type" (keyup)="getFilterValue($event,'subtype')" />
+          </div>
+        </div>
+        <div class="col-md-3 col-sm-6 col-12">
+          <div class="form-group ">
+            <label for="gender " class="label ">Search by Gender</label>
+            <input type="text " nbInput fullWidth placeholder="Gender " (keyup)="getFilterValue($event,'gender')" />
+          </div>
+        </div>
+        <div class="col-md-3 col-sm-6 col-12">
+          <div class="form-group ">
+            <label for="genderFit " class="label ">Search by Gender Fit</label>
+            <input type="text" nbInput fullWidth placeholder="Gender Fit "
+              (keyup)="getFilterValue($event,'genderFit')" />
+          </div>
+        </div>
+        <div class="col-md-3 col-sm-6 col-12">
+          <div class="form-group ">
+            <label for="size " class="label ">Search by Size</label>
+            <input type="text" nbInput fullWidth placeholder="Size " (keyup)="getFilterValue($event,'size')" />
+          </div>
+        </div>
+        <div class="col-md-3 col-sm-6 col-12">
+          <div class="form-group ">
+            <label for="color" class="label ">Search by Color</label>
+            <input type="text" nbInput fullWidth placeholder="Color " (keyup)="getFilterValue($event,'color')" />
+          </div>
+        </div>
+        <div class="col-md-3 col-sm-6 col-12">
+          <div class="form-group ">
+            <label for="season" class="label ">Search by Season</label>
+            <input type="text" nbInput fullWidth placeholder="Season " (keyup)="getFilterValue($event,'season')" />
+          </div>
+        </div>
+      </div> -->
+      <div class="buttons-row custom-buttons-row">
+        <button type="button" nbButton status="success" (click)="onAddItem()">Add</button>
+      </div>
+      <div class="table-responsive">
+        <dx-data-grid [dataSource]="items" [showBorders]="true" (onRowClick)="onSelectRow($event)"
+          (onRowRemoved)="onRowRemoved($event)">
+          <dxo-sorting mode="multiple"></dxo-sorting>
+          <!-- <dxo-export [enabled]="true" fileName="items" [allowExportSelectedData]="false"></dxo-export> -->
+          <dxo-paging [enabled]="true" [pageSize]="7" [pageIndex]="0"></dxo-paging>
+          <dxo-pager [showPageSizeSelector]="false" [showNavigationButtons]="true" [showInfo]="true"
+            infoText="Page #{0}. Total: {1} ({2} items)">
+            <!--[allowedPageSizes]="[10, 20, 50]"-->
+          </dxo-pager>
+          <dxo-scrolling columnRenderingMode="virtual"></dxo-scrolling>
+          <dxo-filter-row [visible]="showFilterRow" [applyFilter]="currentFilter"></dxo-filter-row>
+          <dxo-header-filter [visible]="showHeaderFilter"></dxo-header-filter>
+          <dxo-search-panel [visible]="true" [width]="240" placeholder="Search..."></dxo-search-panel>
+          <dxo-editing mode="row" [allowDeleting]="true" [useIcons]="true"></dxo-editing>
+          <dxi-column dataField="Actions" type="buttons" [width]="110">
+            <dxi-button name="delete"></dxi-button>
+            <dxi-button icon="edit" [onClick]="onEdit"></dxi-button>
+          </dxi-column>
+          <dxi-column dataField="id" caption="ID" [width]="100" sortOrder="asc"></dxi-column>
+          <dxi-column dataField="name" caption="Name" [width]="150"></dxi-column>
+          <dxi-column dataField="type" caption="Type" [width]="130"></dxi-column>
+          <dxi-column dataField="itemBodyForm" [width]="140"></dxi-column>
+          <dxi-column dataField="sizeUnit" caption="Size Unit" [width]="130"></dxi-column>
+          <dxi-column dataField="size" caption="Size" [width]="100"></dxi-column>
+          <!-- <dxi-column dataField="threeD[0]" [width]="500"></dxi-column> -->
+          <dxi-column dataField="registerationDate" caption="Creation Date" dataType="date" [width]="140"
+            [calculateFilterExpression]="calculateFilterExpression">
+            <dxo-header-filter [dataSource]="orderHeaderFilter"></dxo-header-filter>
+          </dxi-column>
+          <dxi-column dataField="subtype1" caption="Sub-Type" [width]="140"></dxi-column>
+          <dxi-column dataField="genderType" caption="Gender Type" [width]="140"></dxi-column>
+          <dxi-column dataField="genderFit" caption="Gender Fit" [width]="120"></dxi-column>
+
+          <dxi-column dataField="color" caption="Color" [width]="150"></dxi-column>
+
+          <!-- <dxi-column dataField="CustomerStoreCity" caption="City">
+                <dxo-header-filter [allowSearch]="true"></dxo-header-filter>
+            </dxi-column> -->
+        </dx-data-grid>
+      </div>
+      <!-- <div class="table-responsive">
+        <ng2-smart-table [settings]=" settings" [source]="source" (custom)="onCustomAction($event)"
+          (deleteConfirm)="onDeleteConfirm($event) ">
+        </ng2-smart-table>
+      </div> -->
+    </div>
+
+    <div class="service-error text-center" *ngIf="error">
+      <h5>{{error}}</h5>
+    </div>
+  </nb-card-body>
+</nb-card>

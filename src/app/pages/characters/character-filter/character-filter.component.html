@@ -1,0 +1,85 @@
+<nb-card>
+    <nb-card-header>
+        <h4>3D Characters</h4>
+    </nb-card-header>
+    <nb-card-body>
+
+        <div *ngIf="!error">
+            <!-- <div class="row">
+                <div class="col-lg-3 col-sm-6">
+                    <div class="form-group">
+                        <label for="id" class="label">Search by Id </label>
+                        <input type="text" nbInput fullWidth placeholder="Id" (keyup)="getFilterValue($event,'id')" />
+                    </div>
+                </div>
+                <div class="col-lg-3 col-sm-6">
+                    <div class="form-group">
+                        <label for="name" class="label">Search by Name</label>
+                        <input type="text" nbInput fullWidth placeholder="Name"
+                            (keyup)="getFilterValue($event,'characterName')" />
+                    </div>
+                </div>
+                <div class=" col-lg-3 col-sm-6 ">
+                    <div class="form-group">
+                        <label for="gendar" class="label">Search by Gender</label>
+                        <input type="text" nbInput fullWidth placeholder="Gender"
+                            (keyup)="getFilterValue($event,'gendar')" />
+                    </div>
+                </div>
+                <div class="col-lg-3 col-sm-6">
+                    <div class="form-group">
+                        <label for="date" class="label">Search by Date</label>
+                        <input type="text" nbInput fullWidth placeholder="Creation Date"
+                            (keyup)="getFilterValue($event,'createdDate')" />
+                    </div>
+                </div>
+            </div> -->
+
+            <!-- <div class="table-responsive">
+                <ng2-smart-table [settings]=" settings " [source]="source" (userRowSelect)="onSelectCharacter($event)"
+                    (deleteConfirm)="onDeleteConfirm($event)" (custom)="onCustomAction($event)">
+                </ng2-smart-table>
+            </div> -->
+            <div class="buttons-row custom-buttons-row">
+                <button type="button" nbButton status="success" (click)="onAddCharacter()">Add</button>
+            </div>
+            <div class="table-responsive">
+                <dx-data-grid [dataSource]="Characters" [showBorders]="true" (onRowClick)="onSelectRow($event)"
+                    (onRowRemoved)="onRowRemoved($event)">
+                    <dxo-sorting mode="multiple"></dxo-sorting>
+                    <!-- <dxo-export [enabled]="true" fileName="Characters" [allowExportSelectedData]="false"></dxo-export> -->
+                    <dxo-paging [enabled]="true" [pageSize]="7" [pageIndex]="0"></dxo-paging>
+                    <dxo-pager [showPageSizeSelector]="false" [showNavigationButtons]="true" [showInfo]="true"
+                        infoText="Page #{0}. Total: {1} ({2} items)">
+                        <!--[allowedPageSizes]="[10, 20, 50]"-->
+                    </dxo-pager>
+                    <dxo-scrolling columnRenderingMode="virtual"></dxo-scrolling>
+                    <dxo-filter-row [visible]="showFilterRow" [applyFilter]="currentFilter"></dxo-filter-row>
+                    <dxo-header-filter [visible]="showHeaderFilter"></dxo-header-filter>
+                    <dxo-search-panel [visible]="true" [width]="240" placeholder="Search..."></dxo-search-panel>
+                    <dxo-editing mode="row" [allowDeleting]="true" [useIcons]="true"></dxo-editing>
+                    <dxi-column dataField="Actions" type="buttons" [width]="150">
+                        <dxi-button name="delete"></dxi-button>
+                        <dxi-button icon="edit" [onClick]="onEdit"></dxi-button>
+                    </dxi-column>
+                    <dxi-column dataField="id" caption="ID" [width]="130" sortOrder="asc"></dxi-column>
+                    <dxi-column dataField="characterName" caption="Name" [width]="250"></dxi-column>
+                    <dxi-column dataField="gendar" caption="Gender" [width]="140"></dxi-column>
+                    <dxi-column dataField="age" [width]="130"></dxi-column>
+                    <dxi-column dataField="bodyForm" [width]="140"></dxi-column>
+                    <dxi-column dataField="createdDate" caption="Creation Date" dataType="date" [width]="230"
+                        [calculateFilterExpression]="calculateFilterExpression">
+                        <dxo-header-filter [dataSource]="orderHeaderFilter"></dxo-header-filter>
+                    </dxi-column>
+                    <!-- <dxi-column dataField="CustomerStoreCity" caption="City">
+                        <dxo-header-filter [allowSearch]="true"></dxo-header-filter>
+                    </dxi-column> -->
+                </dx-data-grid>
+            </div>
+
+        </div>
+        <div class="service-error text-center" *ngIf="error">
+            <h5>{{error}}</h5>
+        </div>
+    </nb-card-body>
+</nb-card>

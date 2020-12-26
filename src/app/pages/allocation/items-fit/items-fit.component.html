@@ -1,0 +1,141 @@
+<nb-card>
+    <nb-card-header>Items Filter</nb-card-header>
+    <nb-card-body>
+        <div class="alert alert-danger" *ngIf="!characterId">
+            Select your character first from <a class="text-link" routerLink="../../characters/character-filter">3D
+                characters</a>
+        </div>
+        <div *ngIf="!alertcharacterLoaded" class="mianOverlay">
+            <div class="loadedChar" [@enterAnimation]>
+                <span> Please Wait until your character loaded successfully</span>
+            </div>
+        </div>
+
+        <div class=" row">
+            <div class="col-md-4 col-sm-6 col-12">
+                <div class="form-group">
+                    <label for="type" class="label">Item Type</label>
+                    <ng-select [items]="[{name:'All'},{name:'Clothes'},{name:'Accessories'}]" bindLabel="name"
+                        bindValue="name" placeholder="Choose..." (change)="onItemTypeChange($event)" [ngModel]="null"
+                        name="type">
+                    </ng-select>
+                </div>
+            </div>
+            <div class="col-md-4 col-sm-6 col-12">
+                <div class="form-group">
+                    <label for="subType" class="label">Item SubType</label>
+                    <ng-select [items]="itemSubTypeArr" bindLabel="name" bindValue="name" placeholder="Choose..."
+                        (change)="onItemSubTypeChange($event)" [(ngModel)]="itemSubtype1" name="subType">
+                    </ng-select>
+                </div>
+            </div>
+            <div class="col-md-4 col-sm-6 col-12">
+                <div class="form-group">
+                    <label for="Color" class="label">Item Color</label>
+                    <ng-select [items]="[
+                         {name:'All'},
+                        {name:'Navy'},
+                        {name:'Black'},
+                        {name:'White'},
+                        {name:'Blue'},
+                        {name:'Green'},
+                        {name:'Red'},
+                        {name:'Dark Red'},
+                        {name:'Grey'},
+                        {name:'Yellow'},
+                        {name:'Orange'},
+                        {name:'Brown'}]" bindLabel="name" bindValue="name" placeholder="Choose..."
+                        (change)="onItemColorChange($event)" [ngModel]="null" name="Color">
+                    </ng-select>
+                </div>
+            </div>
+            <ng-container *ngIf="AccessoriesMode">
+                <div class="col-md-4 col-sm-6 col-12" *ngIf="shoesMode">
+                    <div class="form-group">
+                        <label for="shoseSize" class="label">Shoes Size</label>
+                        <ng-select [items]="shoseSize" bindLabel="name" (change)="onshoesChange($event)"
+                            placeholder="Choose..." [ngModel]="null" name="shoseSize">
+                        </ng-select>
+                    </div>
+                </div>
+                <div class="col-md-4 col-sm-6 col-12" *ngIf="bagMode">
+                    <div class="form-group">
+                        <label for="bagSize" class="label">Size</label>
+                        <ng-select [items]="[{name:'Small'},{name:'Big'}]" bindLabel="name" bindValue="name"
+                            placeholder="Choose..." [ngModel]="null" (change)="onBagChange($event)" name="bagSize">
+                        </ng-select>
+                    </div>
+                </div>
+            </ng-container>
+        </div>
+        <button type="button" (click)="onItemSearch()" class="float-right" nbButton>Search</button>
+    </nb-card-body>
+</nb-card>
+<nb-card>
+    <nb-card-header>Items Recommended Based on Character Chosen
+    </nb-card-header>
+    <nb-card-body>
+        <div class=" mb-2" *ngFor="let item of ItemFitArr; let i =index" style="border-bottom: 1px solid #ccc;">
+            <div class="media" *ngIf="item.threeD.length>0">
+                <img *ngIf="item.twoD.length <= 0" class="mr-3" class="image-fluid mr-3" [src]="'assets/unnamed.png'"
+                    alt="Generic placeholder image">
+                <img class="mr-3" class="image-fluid mr-3"
+                    [src]="apiUrl+':8100/file-transfer-service/items/'+ item.id+'/'+item.twoD[0]"
+                    alt="Generic placeholder image">
+                <div class="media-body">
+                    <h6 class="mt-0">{{item.name}}</h6>
+                    <div class="row mb-1">
+                        <div class="col-md-6 col-12" *ngIf="item.size != null"><strong
+                                class="mr-1">Size:</strong>{{item.size}}
+                        </div>
+                        <div class="col-md-6 col-12" *ngIf="item.shoseSize>=0"><strong class="mr-1">
+                                Size:</strong>{{item.shoseSize}}</div>
+                        <div class="col-md-6 col-12" *ngIf="item.bagSize != null"><strong class="mr-1">
+                                Size:</strong>{{item.bagSize}}</div>
+                        <div class="col-md-6 col-12" *ngIf="item.color != null"><strong
+                                class="mr-1">Color:</strong>{{item.color}}
+                        </div>
+                        <div class="col-12" *ngIf="item.brand != null"><strong
+                                class="mr-1">Brand:</strong>{{item.brand}}
+                        </div>
+
+                    </div>
+                    <div class="row mb-1">
+                        <div class="col-12" *ngIf="item.shoulderToHip >=0">
+                            <strong class="mr-1">Shoulder To Hip sDiffer:</strong>{{item.shoulderToHip}}
+                        </div>
+                    </div>
+                    <div class="row mb-1">
+                        <div class="col-12" *ngIf="item.sizeFit != null"><strong class="mr-1">Size
+                                Fit:</strong><span>{{item.sizeFit}}</span>
+                            <span class="status ml-3"
+                                [ngClass]="item.sizeFit ==='Perfectly fit' ? 'bg-success' : 'bg-warning'"></span>
+                        </div>
+                        <div class="col-md-6 col-12" *ngIf="item.neck >=0">
+                            <strong class="mr-1">Neck Differ:</strong><span>{{item.neck}}</span>
+                        </div>
+                        <div class="col-md-6 col-12" *ngIf="item.sleeve >=0">
+                            <strong class="mr-1">Sleeve Differ:</strong>{{item.sleeve}}</div>
+                    </div>
+
+                    <div class="row mb-1">
+                        <div class="col-md-6 col-12" *ngIf="item.chest>=0"><strong class="mr-1">Chest
+                                Differ:</strong>{{item.chest}}</div>
+                        <div class="col-md-6 col-12" *ngIf="item.waist>=0"><strong class="mr-1">Waist
+                                Differ:</strong>{{item.waist}}</div>
+                    </div>
+
+                    <div class="d-flex flex-row-reverse  mb-1">
+                        <button type="button" class="mr-2" size="tiny" (click)="onInfo(item)" nbButton>info</button>
+                        <!-- <button type="button" class="mr-2" size="tiny" (click)="onRemove(item)" nbButton
+                                status="danger">Remove</button> -->
+                        <button type="button" class="mr-2" size="tiny"
+                            [disabled]="!characterLoaded || itemLoaded || runAnimation " (click)="onLoadItem(item)"
+                            nbButton status="success">View</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </nb-card-body>
+</nb-card>

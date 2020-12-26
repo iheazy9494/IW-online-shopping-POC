@@ -1,0 +1,119 @@
+<div class="auth">
+  <span class="login100-form-logo">
+    <img src="assets/idealwaves.png" alt="idealwaves" class="img-fluid">
+  </span>
+  <h2 class="text-center">IW Online Shopping</h2>
+</div>
+<h4 id="title" class="title">Register</h4>
+<div class="alert alert-danger" *ngIf="emailNotVerified" style="text-transform: capitalize;">
+  {{emailNotVerified}}
+</div>
+<div *ngIf="!error">
+  <form (ngSubmit)="register()" #form="ngForm" aria-labelledby="title">
+    <div class="form-control-group">
+      <label class="label" for="input-email">Email address:</label>
+      <input nbInput [(ngModel)]="user.email" #email="ngModel" id="input-email" name="email" pattern=".+@.+..+"
+        placeholder="Email address" fullWidth [status]="email.dirty ? (email.invalid  ? 'danger' : 'success') : ''"
+        [required]="getConfigValue('forms.validation.email.required')"
+        [attr.aria-invalid]="email.invalid && email.touched ? true : null">
+      <ng-container *ngIf="email.invalid && email.touched">
+        <div class="text-danger">
+          <div>
+            <small class="error-message" *ngIf="email.errors?.required">
+              Email is required!
+            </small>
+          </div>
+          <div>
+            <small class="error-message" *ngIf="email.errors?.pattern">
+              Email should be the real one!
+            </small>
+          </div>
+        </div>
+      </ng-container>
+    </div>
+
+    <div class="form-control-group">
+      <label class="label" for="input-password">Password:</label>
+      <input nbInput [(ngModel)]="user.password" #password="ngModel"
+        pattern="^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?!.*\s).*$" type="password" id="input-password" name="password"
+        placeholder="Password" fullWidth [status]="email.dirty ? (email.invalid  ? 'danger' : 'success') : ''"
+        [required]="getConfigValue('forms.validation.password.required')"
+        [minlength]="getConfigValue('forms.validation.password.minLength')"
+        [maxlength]="getConfigValue('forms.validation.password.maxLength')"
+        [attr.aria-invalid]="password.invalid && password.touched ? true : null">
+      <ng-container *ngIf="password.invalid && password.touched">
+        <div class="text-danger">
+          <div>
+            <small class="error-message" *ngIf="password.errors?.required">
+              Password is required!
+            </small>
+          </div>
+          <div>
+            <small class="error-message" *ngIf="password.errors?.minlength || password.errors?.maxlength">
+              - Minimum {{ getConfigValue('forms.validation.password.minLength') }} to maximum
+              {{ getConfigValue('forms.validation.password.maxLength') }} characters
+            </small>
+          </div>
+          <div>
+            <small class="error-message" *ngIf="password.errors?.pattern">
+              - (UpperCase, LowerCase and Number)
+            </small>
+          </div>
+        </div>
+      </ng-container>
+    </div>
+
+    <div class="form-control-group">
+      <label class="label" for="input-re-password">Repeat password:</label>
+      <input nbInput [(ngModel)]="user.rePass" #rePass="ngModel" type="password" id="input-re-password" name="rePass"
+        placeholder="Confirm Password" fullWidth
+        [status]="email.dirty ? (email.invalid || password.value != rePass.value  ? 'danger' : 'success') : ''"
+        [required]="getConfigValue('forms.validation.password.required')"
+        [attr.aria-invalid]="rePass.invalid && rePass.touched ? true : null">
+      <div class="text-danger">
+        <div>
+          <small class="error-message" *ngIf="rePass.errors?.required  && rePass.touched ? true : null">
+            Password confirmation is required!
+          </small>
+        </div>
+        <div>
+          <small class=" error-message" *ngIf="password.value !== rePass.value && rePass.touched ? true : null">
+            Password does not match the confirm password.
+          </small>
+        </div>
+      </div>
+    </div>
+    <div class=" form-control-group">
+      <label class="label" for="input-phone">Phone:</label>
+      <div nbInput class="phoneNum">
+        <international-phone-number [(ngModel)]="user.phone" placeholder="Enter phone number" [maxlength]="20"
+          [defaultCountry]="'eg'" required #phone="ngModel" name="phone" [allowedCountries]="['in', 'ca', 'us','eg']">
+        </international-phone-number>
+      </div>
+
+
+      <ng-container *ngIf="phone.invalid && phone.touched">
+        <div class="text-danger">
+          <small class="error-message" *ngIf="phone.errors?.required">
+            Phone Number is required!
+          </small>
+        </div>
+      </ng-container>
+
+    </div>
+
+
+    <button nbButton status="success" [disabled]="loading || !form.valid" class="mx-auto d-block">
+      <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+      Register
+    </button>
+  </form>
+
+</div>
+<div class="service-error text-center" *ngIf="error">
+  <h5>{{error}}</h5>
+</div>
+
+<section class="another-action" aria-label="Sign in">
+  Already have an account? <a class="text-link" routerLink="../login">Log in</a>
+</section>

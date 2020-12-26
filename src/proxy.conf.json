@@ -1,0 +1,6 @@
+{
+    "oauth/*": {
+        "target": "http://164.90.235.175:5050",
+        "secure": false
+    }
+}

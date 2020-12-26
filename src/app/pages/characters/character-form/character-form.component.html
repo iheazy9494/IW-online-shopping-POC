@@ -1,0 +1,235 @@
+<div *ngIf="!error">
+    <form (ngSubmit)="onSubmit(f)" #f=ngForm>
+        <div class="row">
+            <div class="col-md-4 col-sm-6 col-12" *ngIf="editMode">
+                <div class="form-group">
+                    <label for="characterName" class="label">ID<span class="text-danger"></span></label>
+                    <input type="text" nbInput fullWidth placeholder="Name" [value]="characterId" name="characterID"
+                        disabled>
+                </div>
+            </div>
+            <div class="col-md-4 col-sm-6 col-12">
+                <div class="form-group">
+                    <label for="characterName" class="label">Character Name<span class="text-danger">*</span></label>
+                    <input type="text" nbInput fullWidth placeholder="Name" ngModel #characterName="ngModel"
+                        name="characterName" pattern="[a-zA-Z][a-zA-Z0-9\s]*" minlength="5" maxlength="30" required>
+                    <div *ngIf="!characterName?.valid && (characterName?.dirty || characterName?.touched)"
+                        class="text-danger">
+                        <div *ngIf="characterName.errors.required || characterName.errors.minlength ">
+                            <div><small>Not less than 5 char</small></div>
+                        </div>
+                        <div *ngIf="characterName.errors.required || characterName.errors.maxlength ">
+                            <div><small>Not more than 30 char</small></div>
+                        </div>
+                        <div *ngIf="characterName.errors.pattern">
+                            <small> Not starting with numbers or space</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 col-sm-6 col-12">
+                <div class="form-group">
+                    <label for="gender" class="label">Gender<span class="text-danger">*</span></label>
+                    <ng-select [items]="[{name:'Male'},{name:'Female'}]" bindLabel="name" bindValue="name"
+                        placeholder="Choose..." [ngModel]="null" name="gendar" required
+                        (change)="onGenderChange($event)">
+                    </ng-select>
+                </div>
+            </div>
+
+            <div class="col-md-4 col-sm-6 col-12">
+                <div class="form-group">
+                    <label for="characterType" class="label">Character Type<span class="text-danger">*</span></label>
+                    <ng-select [items]="selectedCharacterType" bindLabel="name" bindValue="name" placeholder="Choose..."
+                        [(ngModel)]="selectedCharTypeValue" #CharacterTypeControler="ngModel" name="characterType"
+                        required (change)="onCharacterTypeChangeChange($event)">
+                    </ng-select>
+                    <span *ngIf="!editMode && !selectedCharacterType">
+                        <small
+                            *ngIf="!CharacterTypeControler?.valid && (CharacterTypeControler?.dirty || CharacterTypeControler?.touched)"
+                            class="text-danger"> Select gender first!
+                        </small>
+                    </span>
+                </div>
+            </div>
+            <div class="col-md-4 col-sm-6 col-12">
+                <div class="form-group">
+                    <label for="age" class="label">Character Age<span class="text-danger">*</span></label>
+                    <ng-select [items]="Ages" bindLabel="name" bindValue="name" placeholder="Choose..."
+                        [(ngModel)]="selectedAgeValue" name="age" required>
+                    </ng-select>
+                </div>
+            </div>
+            <div class="col-md-4 col-sm-6 col-12">
+                <div class="form-group">
+                    <label class="label">Character Form<span class="text-danger">*</span></label>
+                    <ng-select [items]="characterFormArr" bindLabel="name" bindValue="name" placeholder="Choose..."
+                        [ngModel]="null" #bodyForm="ngModel" name="bodyForm" required>
+                    </ng-select>
+                </div>
+            </div>
+            <div class="col-md-4 col-sm-6 col-12">
+                <div class="form-group">
+                    <label for="HeadToFeet" class="label">Height(Head to Feet) cm<span
+                            class="text-danger">*</span></label>
+                    <ng-select [items]="HeadToFeet" bindLabel="name" bindValue="name" placeholder="Choose..."
+                        [ngModel]="null" name="headToFeet" required>
+                    </ng-select>
+                </div>
+            </div>
+            <div class="col-md-4 col-sm-6 col-12">
+                <div class="form-group">
+                    <label for="shoulderToFeet" class="label">Height(Shoulder to Feet) cm<span
+                            class="text-danger">*</span></label>
+                    <ng-select [items]="shoulderToFeet" bindLabel="name" bindValue="name" placeholder="Choose..."
+                        [ngModel]="null" name="shoulderToFeet" required>
+                    </ng-select>
+                </div>
+            </div>
+            <div class="col-md-4 col-sm-6 col-12">
+                <div class="form-group">
+                    <label for="shoulderToUnderKnee" class="label">Height(Shoulder to Under Knee) cm<span
+                            class="text-danger">*</span></label>
+                    <ng-select [items]="shoulderToUnderKnee" bindLabel="name" bindValue="name" placeholder="Choose..."
+                        [ngModel]="null" name="shoulderToUnderKnee" required>
+                    </ng-select>
+                </div>
+            </div>
+            <div class="col-md-4 col-sm-6 col-12">
+                <div class="form-group">
+                    <label for="shoulderToAboveKnee" class="label">Height(Shoulder to Above Knee) cm<span
+                            class="text-danger">*</span></label>
+                    <ng-select [items]="shoulderToAboveKnee" bindLabel="name" bindValue="name" placeholder="Choose..."
+                        [ngModel]="null" name="shoulderToAboveKnee" required>
+                    </ng-select>
+                </div>
+            </div>
+            <div class="col-md-4 col-sm-6 col-12">
+                <div class="form-group">
+                    <label for="shoulderToHeel" class="label">Height(Shoulder to Heel) cm<span
+                            class="text-danger">*</span></label>
+                    <ng-select [items]="shoulderToHeel" bindLabel="name" bindValue="name" placeholder="Choose..."
+                        [ngModel]="null" name="shoulderToHeel" required>
+                    </ng-select>
+                </div>
+            </div>
+            <div class="col-md-4 col-sm-6 col-12">
+                <div class="form-group">
+                    <label for="shoulderToHip" class="label">Height(Shoulder to Hip) cm<span
+                            class="text-danger">*</span></label>
+                    <ng-select [items]="shoulderToHip" bindLabel="name" bindValue="name" placeholder="Choose..."
+                        [ngModel]="null" name="shoulderToHip" required>
+                    </ng-select>
+                </div>
+            </div>
+
+            <div class="col-md-4 col-sm-6 col-12">
+                <div class="form-group">
+                    <label for="legLength" class="label">Leg Length cm<span class="text-danger">*</span></label>
+                    <ng-select [items]="leg" bindLabel="name" bindValue="name" placeholder="Choose..." [ngModel]="null"
+                        name="leg" required>
+                    </ng-select>
+                </div>
+            </div>
+            <div class="col-md-4 col-sm-6 col-12">
+                <div class="form-group">
+                    <label for="sleeveLength" class="label">Sleeve Length cm<span class="text-danger">*</span></label>
+                    <ng-select [items]="sleeve" bindLabel="name" bindValue="name" placeholder="Choose..."
+                        [ngModel]="null" name="sleeve" required>
+                    </ng-select>
+                </div>
+            </div>
+            <div class="col-md-4 col-sm-6 col-12">
+                <div class="form-group">
+                    <label for="chest" class="label">Chest cm<span class="text-danger">*</span></label>
+                    <ng-select [items]="chest" bindLabel="name" bindValue="name" placeholder="Choose..."
+                        [ngModel]="null" name="chest" required>
+                    </ng-select>
+                </div>
+            </div>
+            <div class="col-md-4 col-sm-6 col-12">
+                <div class="form-group">
+                    <label for="waist" class="label">Waist cm<span class="text-danger">*</span></label>
+                    <ng-select [items]="waist" bindLabel="name" bindValue="name" placeholder="Choose..."
+                        [ngModel]="null" name="waist" required>
+                    </ng-select>
+                </div>
+            </div>
+
+            <div class="col-md-4 col-sm-6 col-12">
+                <div class="form-group">
+                    <label for="neck" class="label">Neck cm<span class="text-danger">*</span></label>
+                    <ng-select [items]="neck" bindLabel="name" bindValue="name" placeholder="Choose..." [ngModel]="null"
+                        name="neck" required>
+                    </ng-select>
+                </div>
+            </div>
+            <div class="col-md-4 col-sm-6 col-12">
+                <div class="form-group">
+                    <label for="hip" class="label">Hip cm<span class="text-danger">*</span></label>
+                    <ng-select [items]="hip" bindLabel="name" bindValue="name" placeholder="Choose..." [ngModel]="null"
+                        name="hip" required>
+                    </ng-select>
+                </div>
+            </div>
+            <div class="col-md-4 col-sm-6 col-12">
+                <div class="form-group">
+                    <label for="skinColor" class="label">Skin Color<span class="text-danger">*</span></label>
+                    <ng-select [items]="SkinColor" bindLabel="name" bindValue="name" placeholder="Choose..."
+                        [ngModel]="null" name="skinColor" required>
+                        <ng-template ng-label-tmp let-item="item">
+                            <img height="20" width="20" [src]="item.avatar" class="mr-1" />
+                            {{item.name}}
+                        </ng-template>
+                        <ng-template ng-option-tmp let-item="item" let-index="index">
+                            <img height="15" width="15" [src]="item.avatar" class="mr-1" />
+                            {{item.name}}
+                        </ng-template>
+                    </ng-select>
+                </div>
+            </div>
+
+            <div class="col-md-4 col-sm-6 col-12">
+                <div class="form-group">
+                    <label for="hairColor" class="label">Hair Color<span class="text-danger">*</span></label>
+                    <ng-select [items]="hairColor" bindLabel="name" bindValue="name" placeholder="Choose..."
+                        [ngModel]="null" name="hairColor" required>
+                        <ng-template ng-label-tmp let-item="item">
+                            <img height="20" width="20" [src]="item.avatar" class="mr-1" />
+                            {{item.name}}
+                        </ng-template>
+                        <ng-template ng-option-tmp let-item="item" let-index="index">
+                            <img height="15" width="15" [src]="item.avatar" class="mr-1" />
+                            {{item.name}}
+                        </ng-template>
+                    </ng-select>
+                </div>
+            </div>
+            <div class="col-md-4 col-sm-6 col-12">
+                <div class="form-group">
+                    <label for="eyeColor" class="label">Eye Color<span class="text-danger">*</span></label>
+                    <ng-select [items]="eyeColor" bindLabel="name" bindValue="name" placeholder="Choose..."
+                        [ngModel]="null" name="eyeColor" required>
+                        <ng-template ng-label-tmp let-item="item">
+                            <img height="20" width="20" [src]="item.avatar" class="mr-1" />
+                            {{item.name}}
+                        </ng-template>
+                        <ng-template ng-option-tmp let-item="item" let-index="index">
+                            <img height="15" width="15" [src]="item.avatar" class="mr-1" />
+                            {{item.name}}
+                        </ng-template>
+                    </ng-select>
+                </div>
+            </div>
+        </div>
+        <button type="submit" class="mb-2" nbButton
+            [disabled]="f.invalid || !submited">{{editMode ? 'Update' : 'Create'}}</button>
+        <div class="alert alert-success text-center" role="alert" *ngIf="updateSuccess">update Success!</div>
+        <div class="alert alert-danger text-center" role="alert" *ngIf="errorMessage">There is no suitable character
+        </div>
+    </form>
+</div>
+
+<div class="service-error text-center" *ngIf="error">
+    <h5>{{error}}</h5>
+</div>
